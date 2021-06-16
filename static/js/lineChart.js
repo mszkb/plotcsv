@@ -33,6 +33,7 @@ const getCsvFile = (name, idx) => {
 }
 
 const redrawPlot = (data) => {
+    
     console.log("PLOT ME");
     console.log(data);
     // TODO here you can redraw your plot with data
@@ -63,7 +64,9 @@ const redrawPlot = (data) => {
         }});
 
     var container = document.getElementById('visualization');
-    var items = data;
+    container.innerHTML = "";
+    var items = JSON.parse(data);
+    console.log(items)
 
     var dataset = new vis.DataSet(items);
     var options = {
