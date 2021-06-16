@@ -34,87 +34,39 @@ const getCsvFile = (name, idx) => {
 
 const redrawPlot = (data) => {
     
-    console.log("PLOT ME");
-    console.log(data);
-    // TODO here you can redraw your plot with data
-    var names = ['SquareShaded', 'Bargraph', 'Blank', 'CircleShaded'];
-    var groups = new vis.DataSet();
-    groups.add({
-        id: 0,
-        content: names[0],
-        className: 'custom-style1',
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
         options: {
-            drawPoints: {
-                style: 'square' // square, circle
-            },
-            shaded: {
-                orientation: 'bottom' // top, bottom
-            }
-        }});
-
-    groups.add({
-        id: 1,
-        content: names[1],
-        className: 'custom-style2',
-        options: {
-            style:'bar',
-            drawPoints: {style: 'circle',
-                size: 10
-            }
-        }});
-
-    var container = document.getElementById('visualization');
-    container.innerHTML = "";
-    var items = JSON.parse(data);
-    console.log(items)
-
-    var dataset = new vis.DataSet(items);
-    var options = {
-        dataAxis: {
-            showMinorLabels: false,
-            right: {
-                title: {
-                    text: 'Title (right axis)'
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        },
-        legend: {left:{position:"bottom-left"}},
-        start: '2014-06-09',
-        end: '2014-07-03'
-    };
-    var graph2d = new vis.Graph2d(container, items, groups, options);
-
-    function showIcons(show) {
-        graph2d.setOptions({dataAxis: {icons: show}});
-    }
-
-    function showTitle(axis, show) {
-        var title;
-        if(show == true) {
-            title = {text: "Title (" + axis + " axis)"};
         }
-        else {
-            title = {text: undefined};
-        }
-
-        if(axis == 'left') {
-            graph2d.setOptions({dataAxis: {left: {title: title}}});
-        }
-        else {
-            graph2d.setOptions({dataAxis: {right: {title: title}}});
-        }
-    }
-
-    var colors=['red','green','blue','black','yellow','purple','pink'];
-    function styleTitle(axis) {
-        var title;
-        title = {style: "color: " + colors[Math.floor(Math.random() * colors.length) + 1]};
-
-        if(axis == 'left') {
-            graph2d.setOptions({dataAxis: {left: {title: title}}});
-        }
-        else {
-            graph2d.setOptions({dataAxis: {right: {title: title}}});
-        }
-    }
+    }); 
 }
